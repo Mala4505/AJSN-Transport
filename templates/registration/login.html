@@ -1,0 +1,42 @@
+{% extends '../base.html' %}
+
+{% block title %}Login | {% endblock %}
+
+{% block body %}
+<form method="post" class="form-group">
+
+  {% csrf_token %}
+
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-60 ">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-slate-900 text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-3 pb-3">
+  
+                <h1 class="text-2xl lg:text-4xl bgColorText mb-5">Login</h1>
+  
+                <div class="form-outline form-group form-white mb-4">
+                    <input type="text" name="username" placeholder="ITS No." class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white">
+                  <input type="password" name="password" placeholder="Password" class="form-control form-control-lg" />
+                </div>
+
+                <button class="btn btn-outline-light btn-lg px-11 mt-12 py-3" type="submit">Login</button>
+  
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</form>
+
+
+{% endblock %}

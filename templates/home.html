@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Welcome | {% endblock %}
+
+
+
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="{% static 'main.js' %}">
+
+
+<script>
+    $( function() {
+        $("#slider-range").slider({
+            range: true,
+            min: 480,
+            max: 1080,
+            step: 30,
+            values: [480, 1080],
+            slide: function (e, ui) {
+                var hours1 = Math.floor(ui.values[0] / 60);
+                var minutes1 = ui.values[0] - (hours1 * 60);
+
+                if (hours1.length == 1) hours1 = '0' + hours1;
+                if (minutes1.length == 1) minutes1 = '0' + minutes1;
+                if (minutes1 == 0) minutes1 = '00';
+                if (hours1 >= 12) {
+                    if (hours1 == 12) {
+                        hours1 = hours1;
+                        minutes1 = minutes1 + " PM";
+                    } else {
+                        hours1 = hours1 - 12;
+                        minutes1 = minutes1 + " PM";
+                    }
+                } else {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " AM";
+                }
+                if (hours1 == 0) {
+                    hours1 = 12;
+                    minutes1 = minutes1;
+                }
+
+
+
+                $('.slider-time').html(hours1 + ':' + minutes1);
+
+                var hours2 = Math.floor(ui.values[1] / 60);
+                var minutes2 = ui.values[1] - (hours2 * 60);
+
+                if (hours2.length == 1) hours2 = '0' + hours2;
+                if (minutes2.length == 1) minutes2 = '0' + minutes2;
+                if (minutes2 == 0) minutes2 = '00';
+                if (hours2 >= 12) {
+                    if (hours2 == 12) {
+                        hours2 = hours2;
+                        minutes2 = minutes2 + " PM";
+                    } else if (hours2 == 24) {
+                        hours2 = 11;
+                        minutes2 = "59 PM";
+                    } else {
+                        hours2 = hours2 - 12;
+                        minutes2 = minutes2 + " PM";
+                    }
+                } else {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " AM";
+                }
+
+                $('.slider-time2').html(hours2 + ':' + minutes2);
+            }
+        })
+    } );
+</script>
+
+<!-- <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsRtR6J_NowzIITNDGs0QzIn9M_mSVyDs"></script>
+  <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script> -->
+
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsRtR6J_NowzIITNDGs0QzIn9M_mSVyDs&libraries=places"></script>
+
+  
+  
+  <style type="text/css">
+    #map {
+      width: 80%;
+      height: 45px;
+    }
+    #autocomplete {
+      height: 30px;
+      padding-left: 10px;
+      border-radius: 4px;
+      border: 1px solid rgb(186, 178, 178);
+      box-shadow: 0px 0px 12px #EFEFEF;
+    }
+  </style>
+
+
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-2xl lg:text-5xl primaryColorText">Book a Ride</h1>
+</div>
+
+
+
+<div class="container">
+    <div class="card text-white p-3" style="border-radius: 1rem;">
+        <div class="row align-items-center justify-content-center" id="time-range">
+                <div class="col-lg-2 col-md-4 col-6">
+                    <label for="from_time" class="text-black">From:</label>
+                    <label class="form-control slider-time" id="from_time">8:00 AM</label>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <label for="to_time" class="text-black">To:</label>
+                    <label class="form-control slider-time2" id="to_time">6:00 PM</label>
+                </div>
+                </div>
+                <div class="row mt-3">
+            <div class="sliders_step1 col-12">
+               <div id="slider-range"></div>
+            </div>
+        </div>
+        <!-- <div id="map"></div>
+        <br>
+        <button id="confirmPosition">Confirm Position</button>
+        <br>
+        <p>On idle position: <span id="onIdlePositionView"></span></p>
+        <p>On click position: <span id="onClickPositionView"></span></p> -->
+
+        <hr/>
+        <input type="text" id="autocomplete" class="primaryColorText"/>
+        </div>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade text-black" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+                
+        
+        
+    </div>
+</div>
+
+<style>
+
+  </style>
+
+  <script>
+    var input = document.getElementById('autocomplete');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+  </script>
+
+
+<!-- <div class="modal fade" id="location-modal">
+    <div class="modal-dialog modal-dialog-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="address-label">Choose a Location</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div id="map"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-info" data-dismiss="modal">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <input type="hidden" id="latitude" name="latitude"/>
+    <input type="hidden" id="longitude" name="longitude"/>
+
+    <div class="col-sm-1"></div>
+
+    <label class="form-control label col-sm-4">Location</label>
+
+    <div class="col-sm-1">
+        <a class="btn btn-info" onclick="initModal()">Choose Location</a>
+    </div>
+</div>
+
+
+<div id="google_map" style="width:800px;height:400px;"></div> -->
+
+
+<!-- <script>
+    // Get element references
+    var confirmBtn = document.getElementById('confirmPosition');
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+  
+    // Initialize locationPicker plugin
+    var lp = new locationPicker('map', {
+      setCurrentPosition: true, // You can omit this, defaults to true
+    }, {
+      zoom: 15 // You can set any google map options here, zoom defaults to 15
+    });
+  
+    // Listen to button onclick event
+    confirmBtn.onclick = function () {
+      // Get current location and show it in HTML
+      var location = lp.getMarkerPosition();
+      onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+    };
+  
+    // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+    google.maps.event.addListener(lp.map, 'idle', function (event) {
+      // Get current location and show it in HTML
+      var location = lp.getMarkerPosition();
+      onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+    });
+  </script>-->
+  
+
+
+{% endblock %}
