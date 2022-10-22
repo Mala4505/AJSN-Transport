@@ -47,7 +47,7 @@
 
 
 
-                $('.slider-time').html(hours1 + ':' + minutes1);
+                $('.from_time').html(hours1 + ':' + minutes1);
 
                 var hours2 = Math.floor(ui.values[1] / 60);
                 var minutes2 = ui.values[1] - (hours2 * 60);
@@ -71,7 +71,7 @@
                     minutes2 = minutes2 + " AM";
                 }
 
-                $('.slider-time2').html(hours2 + ':' + minutes2);
+                $('.to_time').html(hours2 + ':' + minutes2);
             }
         })
     } );
@@ -90,13 +90,13 @@
       width: 80%;
       height: 45px;
     }
-    #autocomplete {
+    /* #autocomplete {
       height: 30px;
       padding-left: 10px;
       border-radius: 4px;
       border: 1px solid rgb(186, 178, 178);
       box-shadow: 0px 0px 12px #EFEFEF;
-    }
+    } */
   </style>
 
 
@@ -107,15 +107,15 @@
 
 
 <div class="container">
-    <div class="card text-white p-3" style="border-radius: 1rem;">
+    <div class="card p-3" style="border-radius: 1rem;">
         <div class="row align-items-center justify-content-center" id="time-range">
-                <div class="col-lg-2 col-md-4 col-6">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-4">
                     <label for="from_time" class="text-black">From:</label>
-                    <label class="form-control slider-time" id="from_time">8:00 AM</label>
+                    <label class="form-control from_time" name="from_time">8:00 AM</label>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-4">
                     <label for="to_time" class="text-black">To:</label>
-                    <label class="form-control slider-time2" id="to_time">6:00 PM</label>
+                    <label class="form-control to_time" name="to_time">6:00 PM</label>
                 </div>
                 </div>
                 <div class="row mt-3">
@@ -131,33 +131,37 @@
         <p>On click position: <span id="onClickPositionView"></span></p> -->
 
         <hr/>
-        <input type="text" id="autocomplete" class="primaryColorText"/>
+        <div class="row align-items-center justify-content-center">
+
+            <button type="button" class="btn btn-info text-dark col-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Choose Location
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade text-black" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="autocomplete" class="primaryColorText"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+    </div>
 
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade text-black" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                ...
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            </div>
-        </div>
                 
         
         

@@ -7,4 +7,5 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('add-booking/', views.createBooking, name='add-booking'),
 ]

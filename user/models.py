@@ -37,5 +37,5 @@ class AT_transaction(models.Model):
     blank=False
   )
 
-  class Meta:
-    db_table = 'AT_transaction'
+  def __str__(self):
+    return self.username
