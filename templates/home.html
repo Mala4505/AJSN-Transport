@@ -18,6 +18,26 @@
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 
     <script>
+        function DateDisable() {
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate() + 1;
+            var year = dtToday.getFullYear ();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+
+            var maxDate = year + '-' + month + '-' + day;
+
+            $('#dateControl').attr('min', maxDate);
+        }
+    </script>
+
+
+    <script>
         $( function() {
             $("#slider-range").slider({
                 range: true,
@@ -79,10 +99,34 @@
                     var to_time = document.getElementById("to_time")
 
                     to_time.value = hours2 + ':' + minutes2;
+
                     // $('.to_time').html(hours2 + ':' + minutes2);
                 }
             })
+            var to_time = document.getElementById("to_time").value
+
+            // const tot = to_time.value
+            console.log(to_time)
+
+            const [actualTime, dayornight] = to_time.split(' ')
+            // console.log(actualTime)
+            const timestamp = actualTime.getTime()
+            console.log(timestamp)
         } );
+    </script>
+
+    <script>
+
+        var to_time = document.getElementById("to_time").value;
+
+        
+        // const tot = to_time.value
+        console.log(to_time)
+
+        const [actualTime, dayornight] = tot.split(' ');
+        console.log(actualTime)
+        const timestamp = actualTime.getTime();
+        console.log(timestamp)
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsRtR6J_NowzIITNDGs0QzIn9M_mSVyDs&libraries=places"></script>
@@ -114,7 +158,7 @@
   
 
 
-<div class="p-10 lg:p-20 text-center">
+<div class="pt-10 pb-5 lg:pt-20 lg:pb-10 text-center">
     <h1 class="text-3xl lg:text-5xl primaryColorText">Book a Ride</h1>
 </div>
 
@@ -128,15 +172,26 @@
                 <label for="basic-url" class="form-label">Name:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" class="form-control" name="username" aria-describedby="basic-addon3">
+                    <input type="text" class="form-control" name="username" placeholder="Name">
                 </div>
             </div>
 
-            <div class="col-6">
+            
+            <div class="col-3">
+                <label for="basic-url" class="form-label">Option:</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected disabled>Choose option..</option>
+                    {% for option in options %}
+                        <option value="{{option.CB_For_Id}}">{{option.CB_For}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-3">
                 <label for="basic-url" class="form-label">Booking Date:</label>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3"  onclick="DateDisable()">
                     <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-calendar-days"></i></span>
-                    <input type="date" class="form-control" name="booking_date" aria-describedby="basic-addon3">
+                    <input type="date" class="form-control" name="booking_date" id="dateControl" aria-describedby="basic-addon3">
                 </div>
             </div>
 
@@ -173,11 +228,41 @@
         </div>
 
         <div class="row align-items-center">
-            <div class="col-4">
+            <div class="col-6">
                 <label for="basic-url" class="form-label">Enter Pickup:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-location-dot"></i></span>
-                    <input type="text" name="from_address" id="from_address" class="form-control primaryColorText"/>
+                    <input type="text" name="Source" id="Source" class="form-control primaryColorText"/>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label for="basic-url" class="form-label">Enter Destination:</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-location-dot"></i></span>
+                    <input type="text" name="Destination" id="Destination" class="form-control primaryColorText"/>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+        <hr/>
+        <br/>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="basic-url" class="form-label">No of Passengers:</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-people-group"></i></span>
+                    <input type="number" name="No_Of_Passenger" id="No_Of_Passenger" class="form-control primaryColorText" placeholder="Passenger Count"/>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <label for="basic-url" class="form-label">Purpose:</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-comment"></i></span>
+                    <textarea name="Purpose" id="Purpose" class="form-control primaryColorText" placeholder="Enter your Purpose of Booking"></textarea>
                 </div>
             </div>
         </div>
@@ -259,8 +344,10 @@
 {% block scripts %}
 
     <script>
-        var input = document.getElementById('from_address');
-        var autocomplete = new google.maps.places.Autocomplete(input);
+        var source = document.getElementById('Source');
+        var destination = document.getElementById('Destination');
+        var sourceLocation = new google.maps.places.Autocomplete(source);
+        var destinationLocation = new google.maps.places.Autocomplete(destination);
     </script>
 
     <!-- <script>
