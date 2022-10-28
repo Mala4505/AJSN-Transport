@@ -4,21 +4,18 @@
 
 {% block title %} Test | {% endblock %}
 
+
+
 {% block content %}
 
 <h1>Hello, {{user.username}}!</h1>
 
-{% if context %}
-	{% for message in context %}
-        <h1>Hello, {{message}}!</h1>
-						<!-- <div class="toast align-items-center text-bg-info border-0" role="alert" aria-live="assertive" aria-atomic="true">
-							<div class="d-flex">
-							<div class="toast-body">
-								{{ message }}
-							</div>
-							<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-							</div>
-						</div> -->
+{% if messages %}
+	{% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="success">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>
+    </div>
 	{% endfor %}
 {% endif %}
 

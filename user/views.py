@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+
 from user.models import *
 from user.forms import *
 
@@ -16,14 +18,15 @@ def home(request):
         if bookings.is_valid():
             # answer = bookings.cleaned_data['value']
             bookings.save()
-            context = {'bookings': bookings}
-            messages = {messages: "Booking Complete. Please Wait for the Confirmation..."}
-            return render(request, 'test.html', context, messages)
+            # context = {'bookings': bookings}
+            messages.error(request, "Booking Complete. Please Wait for the Confirmation...")
+            return redirect(home)
 
         else:
             print(bookings.errors)
-            messages = {messages: "Booking Failed. Please Try Again..."}
-            return render(request, 'home.html', messages)
+            # messages = {'messages':"Booking Failed. Please Try Again..."}
+            messages.error(request, "Booking Failed. Please Try Again...")
+            return redirect(home)
 
     else:
         options = CB_Option_Master.objects.all()
