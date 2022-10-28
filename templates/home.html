@@ -5,6 +5,7 @@
 {% block title %} Welcome | {% endblock %}
 
 {% block head_extras %}
+
     <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -49,30 +50,36 @@
                     var hours1 = Math.floor(ui.values[0] / 60);
                     var minutes1 = ui.values[0] - (hours1 * 60);
     
-                    if (hours1.length == 1) hours1 = '0' + hours1;
+                    // if (hours1.length == 1) hours1 = '0' + hours1;
                     if (minutes1.length == 1) minutes1 = '0' + minutes1;
                     if (minutes1 == 0) minutes1 = '00';
-                    if (hours1 >= 12) {
-                        if (hours1 == 12) {
-                            hours1 = hours1;
-                            minutes1 = minutes1 + " PM";
-                        } else {
-                            hours1 = hours1 - 12;
-                            minutes1 = minutes1 + " PM";
-                        }
-                    } else {
-                        hours1 = hours1;
-                        minutes1 = minutes1 + " AM";
-                    }
-                    if (hours1 == 0) {
-                        hours1 = 12;
-                        minutes1 = minutes1;
-                    }
+                    if (hours1 < 10)
+                        hours1 = '0' + hours1.toString();
+                    
+
+                    // if (hours1 >= 12) {
+                    //     if (hours1 == 12) {
+                    //         hours1 = hours1;
+                    //         minutes1 = minutes1 + " PM";
+                    //     } else {
+                    //         hours1 = hours1 - 12;
+                    //         minutes1 = minutes1 + " PM";
+                    //     }
+                    // } else {
+                    //     hours1 = hours1;
+                    //     minutes1 = minutes1 + " AM";
+                    // }
+                    // if (hours1 == 0) {
+                    //     hours1 = 12;
+                    //     minutes1 = minutes1;
+                    // }
     
-                    var from_time = document.getElementById("from_time")
+                    var Time_From = document.getElementById("Time_From")
     
-                    from_time.value = hours1 + ':' + minutes1;
-                    // $('.from_time').html(hours1 + ':' + minutes1);
+                    Time_From.value = hours1 + ':' + minutes1;
+
+                    console.log(Time_From.value)
+
     
                     var hours2 = Math.floor(ui.values[1] / 60);
                     var minutes2 = ui.values[1] - (hours2 * 60);
@@ -80,50 +87,52 @@
                     if (hours2.length == 1) hours2 = '0' + hours2;
                     if (minutes2.length == 1) minutes2 = '0' + minutes2;
                     if (minutes2 == 0) minutes2 = '00';
-                    if (hours2 >= 12) {
-                        if (hours2 == 12) {
-                            hours2 = hours2;
-                            minutes2 = minutes2 + " PM";
-                        } else if (hours2 == 24) {
-                            hours2 = 11;
-                            minutes2 = "59 PM";
-                        } else {
-                            hours2 = hours2 - 12;
-                            minutes2 = minutes2 + " PM";
-                        }
-                    } else {
-                        hours2 = hours2;
-                        minutes2 = minutes2 + " AM";
-                    }
+
+                    if (hours2 < 10)
+                        hours2 = '0' + hours2.toString();
+                    // if (hours2 >= 12) {
+                    //     if (hours2 == 12) {
+                    //         hours2 = hours2;
+                    //         minutes2 = minutes2 + " PM";
+                    //     } else if (hours2 == 24) {
+                    //         hours2 = 11;
+                    //         minutes2 = "59 PM";
+                    //     } else {
+                    //         hours2 = hours2 - 12;
+                    //         minutes2 = minutes2 + " PM";
+                    //     }
+                    // } else {
+                    //     hours2 = hours2;
+                    //     minutes2 = minutes2 + " AM";
+                    // }
                     
-                    var to_time = document.getElementById("to_time")
+                    var Time_To = document.getElementById("Time_To")
 
-                    to_time.value = hours2 + ':' + minutes2;
+                    Time_To.value = hours2 + ':' + minutes2;
 
-                    // $('.to_time').html(hours2 + ':' + minutes2);
+                    console.log(Time_To.value)
+                    // $('.Time_To').html(hours2 + ':' + minutes2);
                 }
             })
-            var to_time = document.getElementById("to_time").value
+            // var Time_To = document.getElementById("Time_To").value
 
-            // const tot = to_time.value
-            console.log(to_time)
+            // // const tot = Time_To.value
 
-            const [actualTime, dayornight] = to_time.split(' ')
-            // console.log(actualTime)
-            const timestamp = actualTime.getTime()
-            console.log(timestamp)
+            // const [actualTime, dayornight] = Time_To.split(' ')
+            // // console.log(actualTime)
+            // const timestamp = actualTime.getTime()
+            // console.log(timestamp)
         } );
     </script>
 
     <script>
 
-        var to_time = document.getElementById("to_time").value;
+        var Time_To = document.getElementById("Time_To").value;
 
         
-        // const tot = to_time.value
-        console.log(to_time)
+        console.log(Time_To)
 
-        const [actualTime, dayornight] = tot.split(' ');
+        const [actualTime, dayornight] = Time_To.split(' ');
         console.log(actualTime)
         const timestamp = actualTime.getTime();
         console.log(timestamp)
@@ -136,26 +145,13 @@
       <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script> -->
 
 
-    <style type="text/css">
-        #map {
-        width: 80%;
-        height: 45px;
-        }
-        /* #autocomplete {
-        height: 30px;
-        padding-left: 10px;
-        border-radius: 4px;
-        border: 1px solid rgb(186, 178, 178);
-        box-shadow: 0px 0px 12px #EFEFEF;
-        } */
-    </style>
-
 {% endblock %}
 
 
-{% block content %}
 
-  
+
+
+{% block content %}  
 
 
 <div class="pt-10 pb-5 lg:pt-20 lg:pb-10 text-center">
@@ -168,19 +164,19 @@
         {% csrf_token %}
 
         <div class="row">
-            <div class="col-6">
-                <label for="basic-url" class="form-label">Name:</label>
+            <div class="col-6 ">
+                <label  class="form-label">Name:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" class="form-control" name="username" placeholder="Name">
+                    <span class="input-group-text" ><i class="fa-solid fa-user"></i></span>
+                    <input type="text" class="form-control" name="UserId" placeholder="Name" required>
                 </div>
             </div>
 
             
             <div class="col-3">
-                <label for="basic-url" class="form-label">Option:</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected disabled>Choose option..</option>
+                <label class="form-label">Option:</label>
+                <select class="form-select" required>
+                    <option disabled value="">Choose option..</option>
                     {% for option in options %}
                         <option value="{{option.CB_For_Id}}">{{option.CB_For}}</option>
                     {% endfor %}
@@ -188,10 +184,10 @@
             </div>
 
             <div class="col-3">
-                <label for="basic-url" class="form-label">Booking Date:</label>
+                <label  class="form-label">Booking Date:</label>
                 <div class="input-group mb-3"  onclick="DateDisable()">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-calendar-days"></i></span>
-                    <input type="date" class="form-control" name="booking_date" id="dateControl" aria-describedby="basic-addon3">
+                    <span class="input-group-text" ><i class="fa-solid fa-calendar-days"></i></span>
+                    <input type="date" class="form-control" name="dt" id="dateControl" aria-describedby="basic-addon3" required>
                 </div>
             </div>
 
@@ -203,20 +199,20 @@
 
         <div class="row align-items-center justify-content-center" id="time-range">
             <div class="col-xl-2 col-lg-3 col-md-4 col-4">
-                <label for="basic-url" class="form-label">From:</label>
+                <label  class="form-label">From:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-clock"></i></span>
-                    <input type="text" class="form-control text-center" name="from_time" id="from_time" value="8:00 AM">
-                    <!-- <label class="form-control from_time text-center" name="from_time" id="from_time">8:00 AM</label> -->
+                    <span class="input-group-text" ><i class="fa-solid fa-clock"></i></span>
+                    <input type="time" class="form-control text-center" name="Time_From" id="Time_From" value="08:00 AM" required>
+                    <!-- <label class="form-control Time_From text-center" name="Time_From" id="Time_From">8:00 AM</label> -->
                 </div>
             </div>
 
             <div class="col-xl-2 col-lg-3 col-md-4 col-4">
-                <label for="basic-url" class="form-label">To:</label>
+                <label  class="form-label">To:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-clock"></i></span>
-                    <input type="text" class="form-control text-center" name="to_time" id="to_time" value="6:00 PM">
-                    <!-- <label class="form-control to_time text-center" name="to_time" id="to_time">6:00 PM</label> -->
+                    <span class="input-group-text" ><i class="fa-solid fa-clock"></i></span>
+                    <input type="time" class="form-control text-center" name="Time_To" id="Time_To" value="06:00 PM" required>
+                    <!-- <label class="form-control Time_To text-center" name="Time_To" id="Time_To">6:00 PM</label> -->
                 </div>
             </div>
 
@@ -229,18 +225,18 @@
 
         <div class="row align-items-center">
             <div class="col-6">
-                <label for="basic-url" class="form-label">Enter Pickup:</label>
+                <label  class="form-label">Enter Pickup:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-location-dot"></i></span>
-                    <input type="text" name="Source" id="Source" class="form-control primaryColorText"/>
+                    <span class="input-group-text" ><i class="fa-solid fa-location-dot"></i></span>
+                    <input type="text" name="Source" id="Source" class="form-control primaryColorText" required/>
                 </div>
             </div>
 
             <div class="col-6">
-                <label for="basic-url" class="form-label">Enter Destination:</label>
+                <label  class="form-label">Enter Destination:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-location-dot"></i></span>
-                    <input type="text" name="Destination" id="Destination" class="form-control primaryColorText"/>
+                    <span class="input-group-text" ><i class="fa-solid fa-location-dot"></i></span>
+                    <input type="text" name="Destination" id="Destination" class="form-control primaryColorText" required/>
                 </div>
             </div>
         </div>
@@ -251,31 +247,28 @@
 
         <div class="row">
             <div class="col-3">
-                <label for="basic-url" class="form-label">No of Passengers:</label>
+                <label  class="form-label">No of Passengers:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-people-group"></i></span>
-                    <input type="number" name="No_Of_Passenger" id="No_Of_Passenger" class="form-control primaryColorText" placeholder="Passenger Count"/>
+                    <span class="input-group-text" ><i class="fa-solid fa-people-group"></i></span>
+                    <input type="number" name="No_Of_Passenger" id="No_Of_Passenger" class="form-control primaryColorText" placeholder="Passenger Count" required/>
                 </div>
             </div>
 
             <div class="col-9">
-                <label for="basic-url" class="form-label">Purpose:</label>
+                <label  class="form-label">Purpose:</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-comment"></i></span>
-                    <textarea name="Purpose" id="Purpose" class="form-control primaryColorText" placeholder="Enter your Purpose of Booking"></textarea>
+                    <span class="input-group-text" ><i class="fa-solid fa-comment"></i></span>
+                    <textarea name="Purpose" id="Purpose" class="form-control primaryColorText" placeholder="Enter your Purpose of Booking" required></textarea>
                 </div>
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-4">
-                <label for="basic-url" class="form-label">Enter Destination:</label>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"><i class="fa-solid fa-location-dot"></i></span>
-                    <input type="text" id="autocomplete" class="form-control primaryColorText"/>
-                </div>
-            </div>
-        </div> -->
+        
+        <br/>
+
+        <center>
+            <button class="btn btn-outline-success btn-lg px-11 mt-12 py-3" type="submit">Book</button>
+        </center>
         
         <!-- <div id="map"></div>
         <br>
@@ -311,13 +304,10 @@
                 </div>
             </div> -->
 
-        <br/>
-
-        <center>
-            <button class="btn btn-outline-success btn-lg px-11 mt-12 py-3" type="submit">Book</button>
-        </center>
 
     </form>
+
+</div>
 
 
 <!-- <div class="form-group row">
@@ -339,6 +329,7 @@
 </div> -->
 
 
+{% endblock %}
 
 
 {% block scripts %}
@@ -381,5 +372,3 @@
 
 {% endblock %}
 
-
-{% endblock %}
