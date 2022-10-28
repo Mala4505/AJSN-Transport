@@ -14,13 +14,16 @@ def home(request):
     if request.method == 'POST':
         bookings = Form_CB_Trans_Table(request.POST)
         if bookings.is_valid():
+            # answer = bookings.cleaned_data['value']
             bookings.save()
             context = {'bookings': bookings}
-            return render(request, 'test.html', context)
+            messages = {messages: "Booking Complete. Please Wait for the Confirmation..."}
+            return render(request, 'test.html', context, messages)
 
         else:
             print(bookings.errors)
-            return render(request, 'home.html')
+            messages = {messages: "Booking Failed. Please Try Again..."}
+            return render(request, 'home.html', messages)
 
     else:
         options = CB_Option_Master.objects.all()

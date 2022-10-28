@@ -10,4 +10,4 @@ class Form_CB_Trans_Table(forms.ModelForm):
 class Form_CB_Option_Master(forms.ModelForm):
     class Meta:
         model= CB_Option_Master
-        fields= ["CB_For"]
+        fields= ["CB_For_ID","CB_For"]

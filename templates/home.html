@@ -78,7 +78,7 @@
     
                     Time_From.value = hours1 + ':' + minutes1;
 
-                    console.log(Time_From.value)
+                    // console.log(Time_From.value)
 
     
                     var hours2 = Math.floor(ui.values[1] / 60);
@@ -110,33 +110,13 @@
 
                     Time_To.value = hours2 + ':' + minutes2;
 
-                    console.log(Time_To.value)
+                    // console.log(Time_To.value)
                     // $('.Time_To').html(hours2 + ':' + minutes2);
                 }
             })
-            // var Time_To = document.getElementById("Time_To").value
-
-            // // const tot = Time_To.value
-
-            // const [actualTime, dayornight] = Time_To.split(' ')
-            // // console.log(actualTime)
-            // const timestamp = actualTime.getTime()
-            // console.log(timestamp)
         } );
     </script>
 
-    <script>
-
-        var Time_To = document.getElementById("Time_To").value;
-
-        
-        console.log(Time_To)
-
-        const [actualTime, dayornight] = Time_To.split(' ');
-        console.log(actualTime)
-        const timestamp = actualTime.getTime();
-        console.log(timestamp)
-    </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsRtR6J_NowzIITNDGs0QzIn9M_mSVyDs&libraries=places"></script>
 
@@ -151,7 +131,22 @@
 
 
 
-{% block content %}  
+{% block content %}
+
+
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+    <!-- <div class="toast align-items-center text-bg-info border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+        <div class="toast-body">
+            {{ message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div> -->
+{% endfor %}
+{% endif %}
 
 
 <div class="pt-10 pb-5 lg:pt-20 lg:pb-10 text-center">
@@ -175,10 +170,10 @@
             
             <div class="col-3">
                 <label class="form-label">Option:</label>
-                <select class="form-select" required>
-                    <option disabled value="">Choose option..</option>
+                <select class="form-select" name="CB_For_ID" required>
+                    <option value="">Choose an Option...</option>
                     {% for option in options %}
-                        <option value="{{option.CB_For_Id}}">{{option.CB_For}}</option>
+                        <option value="{{ option.CB_For_ID }}">{{option.CB_For}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -202,7 +197,7 @@
                 <label  class="form-label">From:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" ><i class="fa-solid fa-clock"></i></span>
-                    <input type="time" class="form-control text-center" name="Time_From" id="Time_From" value="08:00 AM" required>
+                    <input type="time" class="form-control text-center" name="Time_From" id="Time_From" value="08:00" required>
                     <!-- <label class="form-control Time_From text-center" name="Time_From" id="Time_From">8:00 AM</label> -->
                 </div>
             </div>
@@ -211,7 +206,7 @@
                 <label  class="form-label">To:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" ><i class="fa-solid fa-clock"></i></span>
-                    <input type="time" class="form-control text-center" name="Time_To" id="Time_To" value="06:00 PM" required>
+                    <input type="time" class="form-control text-center" name="Time_To" id="Time_To" value="18:00" required>
                     <!-- <label class="form-control Time_To text-center" name="Time_To" id="Time_To">6:00 PM</label> -->
                 </div>
             </div>
