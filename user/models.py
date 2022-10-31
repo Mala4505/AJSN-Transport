@@ -92,7 +92,7 @@ class CB_Trans_Table(models.Model):
     blank=True
   )
 
-  Overtime = models.SmallIntegerField(blank=True, default=1)
+  Overtime = models.SmallIntegerField(blank=True, default=0)
 
   Overtime_Time = models.TimeField(
     max_length=6,
