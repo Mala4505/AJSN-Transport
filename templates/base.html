@@ -53,13 +53,13 @@
 		
 		<div class="container">
 
-				{% if not user.is_authenticated %}
-					{% block body %}
-					{% endblock %}
-				{% else %}
-					{% block content %}
-					{% endblock %}
-				{% endif %}
+			{% if user.is_authenticated %}
+				{% block content %}
+				{% endblock %}
+			{% else %} 
+				{% block body %}
+				{% endblock %}
+			{% endif %}
 
 		</div>
 	</body>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'administration.apps.AdministrationConfig',
     'login',
+    'driver',
     'rest_framework',
     'corsheaders',
 ]
@@ -64,7 +65,9 @@ ROOT_URLCONF = 'Ajsn_Transport.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [
+            BASE_DIR / "templates",
+            os.path.join(BASE_DIR, "dashboard/build")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,6 +139,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, "dashboard/build/static")
 )
 
 # Default primary key field type
