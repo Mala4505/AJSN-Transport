@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Topbar from './scenes/global/Topbar';
 // import SideMenu from './scenes/global/SideMenu';
+// import Sidebar from './scenes/global/Sidebar';
 import Navbar from './scenes/global/Navbar';
 
 import Dashboard from './scenes/dashboard';

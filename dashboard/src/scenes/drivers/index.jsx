@@ -58,7 +58,7 @@ const Drivers = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box m="20px" marginLeft="15vw" p="2rem" height="100%">
       <Header
         title="Drivers"
         subtitle="List of Drivers"

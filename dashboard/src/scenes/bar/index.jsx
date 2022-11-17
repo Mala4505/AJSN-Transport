@@ -6,7 +6,7 @@ import BarGraph from "../../components/BarGraph";
 
 const Bar = () => {
   return (
-    <Box m="20px">
+    <Box m="20px" marginLeft="15vw" p="2rem" height="100%">
       <Header title="Bar Chart" subtitle="Simple Bar Chart" />
       <Box height="75vh" width="75%" >
         <BarGraph />

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
+// import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
@@ -20,8 +20,20 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [driver, setDriver] = useState([]);
+
+  useEffect(() => {
+    const setdriver = async () => {
+      const res = await fetch("http://127.0.0.1:8000/administration/driver/");
+      const getdata = await res.json();
+      setDriver(getdata);
+      // console.log(getdata);
+    };
+    setdriver();
+  },[]);
+
   return (
-    <Box m="20px">
+    <Box m="20px" marginLeft="15vw" p="2rem" height="100%">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
@@ -165,7 +177,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <PieGraph isDashboard={true} />
+            <BarGraph isDashboard={true} />
           </Box>
         </Box>
         <Box
@@ -183,12 +195,12 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Drivers Available
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {driver.map((drive, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              key={`${drive.Driver_ID}-${i}`}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -201,19 +213,19 @@ const Dashboard = () => {
                   variant="h5"
                   fontWeight="600"
                 >
-                  {transaction.txId}
+                  {drive.Driver_Name}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {drive.Mobile}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              <Box color={colors.grey[100]}>{drive.date}</Box>
               <Box
                 backgroundColor={colors.greenAccent[500]}
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${transaction.cost}
+                {drive.Email}
               </Box>
             </Box>
           ))}
@@ -259,7 +271,7 @@ const Dashboard = () => {
             Sales Quantity
           </Typography>
           <Box height="250px" mt="-20px">
-            <BarGraph isDashboard={true} />
+            <PieGraph isDashboard={true} />
           </Box>
         </Box>
       </Box>

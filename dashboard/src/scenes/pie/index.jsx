@@ -6,7 +6,7 @@ import PieGraph from "../../components/PieGraph";
 
 const Pie = () => {
   return (
-    <Box m="20px">
+    <Box m="20px" marginLeft="15vw" p="2rem" height="100%">
       <Header title="Pie Chart" subtitle="Simple Pie Chart" />
       <Box height="75vh" width="75%" >
         <PieGraph />
