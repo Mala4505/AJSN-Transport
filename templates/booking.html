@@ -125,8 +125,20 @@
       <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script> -->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.css">
+
+    <link href="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    
+    <!-- <link href="extensions/filter-control/bootstrap-table-filter-control.css"> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script> -->
+    <script src="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.js"></script>
+    <!-- <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/filter-control/bootstrap-table-filter-control.js"></script> -->
+
 
 
 
@@ -261,33 +273,48 @@
         <br/>
 
         <center>
-            <button class="btn btn-outline-success btn-lg px-11 mt-12 py-3 submit-btn" type="submit" >
-                <i class="loading-icon fa fa-spinner fa-spin" hidden></i>
-                <span class="btn-text">Book</span></button>
+            <button class="btn btn-outline-success btn-lg px-11 mt-12 py-3 submit-btn" type="submit" >Book</button>
+                <!-- <i class="loading-icon fa fa-spinner fa-spin" hidden></i>
+                <span class="btn-text">Book</span> -->
         </center>
-
         
-        <table data-toggle="table">
-          <thead>
-            <tr>
-              <th>Item ID</th>
-              <th>Item Name</th>
-              <th>Item Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Item 1</td>
-              <td>$1</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Item 2</td>
-              <td>$2</td>
-            </tr>
-          </tbody>
-        </table>
+        <br/>
+        <hr/>
+        <br/>
+
+        <table
+            id="table"
+            data-toggle="table"
+            data-height="450"
+            data-pagination="true"
+            data-page-size="3"
+            data-sort-name="dt"
+            data-sort-order="desc"
+            >
+            <!-- data-show-refresh="true" -->
+            <!-- data-side-pagination="server" -->
+            <!-- data-search="true"  -->
+            <!-- data-url="http://127.0.0.1:8000/administration/bookings/" -->
+            <!-- data-page-list="[5]" -->
+            <!-- data-side-pagination="server"
+            data-filter-control="true"
+            data-cache="false"  -->
+            <!-- data-searchable="true" -->
+            <!-- data-show-toggle="true"  -->
+            <!-- data-search="true"> -->
+            <!-- data-query-params="queryParams" -->
+        <thead>
+            <!-- <th data-field="dt" data-sortable="true" data-filter-control="input">Date</th> -->
+          <tr>
+            <th data-field="dt">Date</th>
+            <th data-field="UserId">Name</th>
+            <th data-field="Source">Source</th>
+            <th data-field="Destination">Destination</th>
+            <th data-field="Time_From">From</th>
+            <th data-field="Time_To">To</th>
+          </tr>
+        </thead>
+      </table>
     
         <!-- <div id="map"></div>
         <br>
@@ -352,12 +379,11 @@
 
 
 {% block scripts %}
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.js"></script>
-
-
+    <!-- <script>
+        $(function() {
+            $('#table').bootstrapTable()
+        })
+    </script> -->
 
     <script>
         var source = document.getElementById('Source');
@@ -370,7 +396,7 @@
 
     </script>
 
-    <script>
+    <!-- <script>
 
         $(document).ready(function () {
             $(".submit-btn").on("click", function () {
@@ -383,6 +409,34 @@
            
                  }         })
         })
+
+    </script> -->
+
+    <script>
+        
+        var dateControl = document.getElementById("dateControl")
+        var data = $("#dateControl").value;
+
+        // var newArray = obj.Students.filter(function (el){
+        //     return el.Age >=15 &&
+        //             el.RollNumber <= 200 &&
+        //             el.Marks >= 80 ;
+        //     }
+        // );
+        
+        // function queryParams(params) {
+        //     params.search = "2022-11-26";
+        //     return params
+        // }
+        dateControl.onchange = function() {
+            console.log(dateControl.value)
+            // $("#table").bootstrapTable('showLoading')
+            var rurl = "http://127.0.0.1:8000/administration/bookings/"+ dateControl.value
+            $("#table").bootstrapTable('refresh', {silent: true, url: rurl})
+            // $("#table").bootstrapTable('hideLoading')
+
+            // $("#table").bootstrapTable('refresh', {silent: true, url: "http://127.0.0.1:8000/administration/bookings/"})
+        }
 
     </script>
 

@@ -1,7 +1,5 @@
 from django.shortcuts import redirect, render
-
-# from rest_framework.response import Response
-# from rest_framework.decorators import api_view
+from rest_framework import generics
 
 from django.contrib.auth.decorators import login_required
 
@@ -13,6 +11,7 @@ from django.db import connection
 
 from user.models import *
 from user.forms import *
+from user.serializers import TransSerializer
 
 
 
@@ -27,13 +26,13 @@ def booking(request):
             Time_To = request.POST['Time_To']
             dt = request.POST['dt']
 
-            slots = cursor.execute(f'''SELECT * FROM maladb.CB_Trans_Table
-                where (({Time_From} between Time_From and Time_To OR {Time_To} between Time_From and Time_To) OR (Time_From between {Time_From} and {Time_To} OR Time_To between {Time_From} and {Time_To}))
-                and dt = "{dt}"''')
+            # slots = cursor.execute(f'''SELECT * FROM maladb.CB_Trans_Table
+            #     where (({Time_From} between Time_From and Time_To OR {Time_To} between Time_From and Time_To) OR (Time_From between {Time_From} and {Time_To} OR Time_To between {Time_From} and {Time_To}))
+            #     and dt = "{dt}"''')
 
-            # slots = cursor.execute(f'''SELECT * FROM maladb.CB_Trans_Table 
-            #                                     where (('{Time_From}' between Time_From and Time_To
-            #                                     OR '{Time_To}' between Time_From and Time_To) OR (Time_From between {Time_From} and {Time_To} OR Time_To between {Time_From} and {Time_To})) and dt = "{dt}"''')
+            slots = cursor.execute(f'''SELECT * FROM maladb.CB_Trans_Table 
+                                                where (('{Time_From}' between Time_From and Time_To
+                                                OR '{Time_To}' between Time_From and Time_To) OR (Time_From between '{Time_From}' and '{Time_To}' OR Time_To between '{Time_From}' and '{Time_To}')) and dt = "{dt}"''')
                                                 
             # row = cursor.fetchall()
             # print(row)
@@ -59,3 +58,7 @@ def booking(request):
         options = CB_Option_Master.objects.all()
         context = {'options':options}
         return render(request, 'booking.html', context)
+
+# class BookingList(generics.ListCreateAPIView):
+#     serializer_class = TransSerializer
+#     queryset = CB_Trans_Table.objects.all()

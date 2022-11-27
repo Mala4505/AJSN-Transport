@@ -2,20 +2,21 @@ import React from 'react';
 
 import { ColorModeContext, useMode } from './theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
-import Topbar from './scenes/global/Topbar';
+import Topbar from './pages/global/Topbar';
 // import SideMenu from './scenes/global/SideMenu';
 // import Sidebar from './scenes/global/Sidebar';
-import Navbar from './scenes/global/Navbar';
+import Navbar from './pages/global/Navbar';
+// import Header from './pages/global/Navbar';
 
-import Dashboard from './scenes/dashboard';
-import Team from './scenes/team';
-import Drivers from './scenes/drivers';
-import Bookings from './scenes/bookings';
-import Invoices from './scenes/invoices';
-import Bar from './scenes/bar';
-import Pie from './components/PieGraph';
+import Dashboard from './pages/dashboard';
+import Team from './pages/team';
+import Drivers from './pages/drivers';
+import Bookings from './pages/bookings';
+import Invoices from './pages/invoices';
+import Bar from './pages/bar';
+// import Pie from './components/PieGraph';
 
 // import Form from './scenes/form';
 // import Line from './scenes/line';
@@ -32,11 +33,21 @@ function App() {
   <ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="app">
-        <Navbar />
-        <main className='content'>
-          <Topbar />
-          <Routes>
+      <div className="content">
+          <Router>
+            <Navbar />
+        {/* <main className='content'> */}
+            <Routes>
+              <Route path='/' exact element={<Dashboard />} />
+              <Route path='/team' exact element={<Team />} />
+              <Route path='/drivers' exact element={<Drivers />} />
+              <Route path='/bookings' exact  element={<Bookings />} />
+              <Route path='/invoices' exact element={<Invoices />} />
+            </Routes>
+          {/* </main> */}
+          </Router>
+          {/* <Topbar /> 
+          {/* <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/team" element={<Team />} />
             <Route path="/drivers" element={<Drivers />} />
@@ -47,9 +58,8 @@ function App() {
             {/* <Route path="/form" element={<Form />} />
             <Route path="/line" element={<Line />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/faq" element={<FAQ />} /> */}
-          </Routes>
-        </main>
+            <Route path="/faq" element={<FAQ />} />
+          </Routes> */}
       </div>
     </ThemeProvider>
   </ColorModeContext.Provider>
